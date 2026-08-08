@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Firebase Login</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f0f4f8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-box{
+    background:#fff;
+    width:350px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+h2{
+    text-align:center;
+    color:#1565C0;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#1565C0;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0D47A1;
+}
+
+#msg{
+    text-align:center;
+    color:red;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>Login</h2>
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBOw2CG4-8JWYNl5hf3aR7yCPjcPI41IC0",
+  authDomain: "ommtaxsolutions.firebaseapp.com",
+  projectId: "ommtaxsolutions",
+  storageBucket: "ommtaxsolutions.firebasestorage.app",
+  messagingSenderId: "944702919466",
+  appId: "1:944702919466:web:6f37b36e1d5cf6d7a54453",
+  measurementId: "G-NNTHM5Y4B8"
+
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+window.login = function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+
+.then((userCredential)=>{
+
+alert("Login Successful");
+
+window.location="https://ommtax.github.io/kalyanimushroom/";
+
+})
+
+.catch((error)=>{
+
+document.getElementById("msg").innerHTML=error.message;
+
+});
+
+}
+
+// Already Logged In
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+console.log("Logged In");
+}
+
+});
+
+</script>
+
+</body>
+</html>
